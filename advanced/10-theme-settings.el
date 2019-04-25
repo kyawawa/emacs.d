@@ -17,8 +17,13 @@
 (set-face-background 'vertical-border "#880000")
 (set-face-foreground 'vertical-border (face-background 'vertical-border))
 
+;; set transparency
+;; (set-frame-parameter (selected-frame) 'alpha '(85 85))
+;; (add-to-list 'default-frame-alist '(alpha 85 85))
+
 ;; Theme
-(setup "cyberpunk-theme"
+(use-package cyberpunk-theme
+  :init
   ;; Memo: Autumn theme
   ;; (setq cyberpunk-pink "#ff9500")
   ;; (setq cyberpunk-pink-1 "#ff0000")

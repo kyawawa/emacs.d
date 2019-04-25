@@ -1,5 +1,5 @@
 ;; -*- Mode: Emacs-Lisp; Coding: utf-8 -*-
-;;; ros-settings.el --- Elisp settings for ROS
+;;; 90-ros-mode.el --- Elisp settings for ROS
 
 (eval-when-compile
   (message "Byte compile rosemacs")
@@ -21,18 +21,20 @@
   (rosemacs/track-topics ros-topic-update-interval)
   (rosemacs/track-nodes ros-node-update-interval)
 
-  ;; nxml mode
-  (setup-lazy '(nxml-mode) "nxml-mode"
-    :prepare
-    (progn
-      (add-to-list 'auto-mode-alist '("\.launch$" . nxml-mode))
-      (add-to-list 'auto-mode-alist '("\.test$" . nxml-mode))
-      (add-to-list 'auto-mode-alist '("manifest.xml" . nxml-mode)))
-    (setup "rng-loc"
-      (cl-pushnew (concat ros-site-lisp "rng-schemas.xml") rng-schema-locating-files)))
+  ;;; nxml mode
+  (use-package nxml-mode
+    :straight nil
+    :mode ("\\.launch\\'" "\\.test\\'" "manifest.xml"))
+  (use-package rng-loc
+    :straight nil
+    :after nxml-mode
+    :config
+    (add-to-list 'rng-schema-locating-files (concat ros-site-lisp "rng-schemas.xml")))  
 
-  (add-to-list 'auto-mode-alist '("\\.urdf" . xml-mode))
-  (add-to-list 'auto-mode-alist '("\\.xacro" . xml-mode))
+  ;;; xml mode
+  (use-package xml-mode
+    :straight nil
+    :mode ("\\.urdf\\'" "\\.xacro\\'" "\\.world\\'" "\\.sdf\\'"))
 
   ;; rosbag view mode
   (add-to-list 'auto-mode-alist '("\.bag$" . rosbag-view-mode))
@@ -48,10 +50,12 @@
 (let ((ROS_DISTRO (getenv "ROS_DISTRO")))
   (when ROS_DISTRO
     (defvar ros-site-lisp (file-name-as-directory (format "/opt/ros/%s/share/emacs/site-lisp" ROS_DISTRO)))
-    (setup-expecting "yasnippets"
-      (cl-pushnew (concat ros-site-lisp "snippets") yas-snippet-dirs))
-    (setup "rosemacs")
-    (my-invoke-rosemacs ros-site-lisp)
+    (with-eval-after-load 'yasnippets
+      (add-to-list 'yas-snippet-dirs (concat ros-site-lisp "snippets")))
+    (use-package rosemacs
+      :straight nil
+      :config
+      (my-invoke-rosemacs ros-site-lisp))
     (global-set-key "\C-x\C-r" ros-keymap)
     (when (eq 0 (shell-command "type roseus"))
       (defun lisp-other-window ()
@@ -62,8 +66,5 @@
          (get-buffer-create "*inferior-lisp*"))
         (run-lisp inferior-lisp-program))
       (global-set-key "\C-cE" 'lisp-other-window))))
-
-(add-to-list 'auto-mode-alist '("\\.world$" . xml-mode))
-(add-to-list 'auto-mode-alist '("\\.sdf$" . xml-mode))
 
 (provide 'ros-settings)

@@ -1,9 +1,13 @@
 ;; -*- Mode: Emacs-Lisp; Coding: utf-8 -*-
-;;; my-tex-mode.el --- Elisp settings for TeX
+;;; tex-mode.el --- Elisp settings for TeX
 
-(setup-lazy '(LaTeX-mode) "latex"
-  (setup "company-auctex"
-    (company-auctex-init))
+(use-package auctex
+  :defer t
+  :bind (:map reftex-mode-map
+        ("\C-cr" . reftex-reference)
+        ("\C-cl" . reftex-label)
+        ("\C-cc" . reftex-citation))
+  :config
   (setq TeX-default-mode 'japanese-latex-mode)
   (setq japanese-LaTeX-default-style "jarticle")
   (setq TeX-output-view-style '(("^dvi$" "." "xdvi '%d'")))
@@ -20,7 +24,6 @@
                                          (add-to-list 'TeX-command-list
                                                       '("pdf" "dvipdfmx -V 4 '%s' " TeX-run-command t nil))
                                          )))
-
   (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
   (setq reftex-plug-into-AUCTeX t)
 
@@ -32,15 +35,6 @@
   ;; (add-hook 'LaTeX-mode-hook 'flyspell-mode)
   (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
   (add-hook 'TeX-mode-hook (lambda () (TeX-fold-mode 1)))
-
-  ;; Change key binding
-  (add-hook 'reftex-mode-hook
-            '(lambda ()
-               (define-key reftex-mode-map (kbd "\C-cr") 'reftex-reference)
-               (define-key reftex-mode-map (kbd "\C-cl") 'reftex-label)
-               (define-key reftex-mode-map (kbd "\C-cc") 'reftex-citation)
-               ))
-
   ;; 数式のラベル作成時にも自分でラベルを入力できるようにする
   (setq reftex-insert-label-flags '("s" "sfte"))
 
@@ -57,9 +51,11 @@
   ;; RefTeXで使用するbibファイルの位置を指定する
   ;; (setq reftex-default-bibliography '("~/tex/biblio.bib" "~/tex/biblio2.bib"))
   (setq reftex-default-bibliography nil)
-  ;; buffer上のファイルを更新
-  (add-hook 'LaTeX-mode-hook 'auto-revert-mode)
-  (add-hook 'bibtex-mode-hook 'auto-revert-mode)
   )
+
+(use-package company-auctex
+  :after auctex
+  :init
+  (company-auctex-init))
 
 (provide 'my-tex-mode)

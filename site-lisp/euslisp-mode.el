@@ -1,13 +1,12 @@
 ;; -*- Mode: Emacs-Lisp; Coding: utf-8 -*-
-;;; my-euslisp-mode.el --- Elisp settings for euslisp-mode
+;;; 99-euslisp-mode.el --- Elisp settings for euslisp-mode
 
 ;; to change indent for euslisp's method definition ;; begin
+;;;###autoload
 (define-derived-mode euslisp-mode lisp-mode
   "EusLisp"
   "Major Mode for EusLisp"
   )
-
-(cl-pushnew '("\\.l$" . euslisp-mode) auto-mode-alist)
 
 (defun lisp-indent-function (indent-point state)
   "This function is the normal value of the variable `lisp-indent-function'.
@@ -30,7 +29,9 @@ that specifies how to do the indentation.  The property value can be
   the indentation.
 
 This function also returns nil meaning don't specify the indentation."
-  (let ((normal-indent (current-column)))
+  (let ((normal-indent (current-column))
+        (calculate-lisp-indent-last-sexp)
+        )
     (goto-char (1+ (elt state 1)))
     (parse-partial-sexp (point) calculate-lisp-indent-last-sexp 0 t)
     (if (and (elt state 2)
@@ -68,4 +69,4 @@ This function also returns nil meaning don't specify the indentation."
               (method
                (funcall method indent-point state)))))))
 
-(provide 'my-euslisp-mode)
+(provide 'euslisp-mode)

@@ -1,0 +1,7 @@
+*.elc
+/auto-save-list
+/ido.last
+/smex-items
+/straight/*
+!/straight/versions/
+!/straight/.gitkeep
