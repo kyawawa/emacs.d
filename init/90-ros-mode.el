@@ -29,9 +29,11 @@
   ;;; nxml mode
   (use-package nxml-mode
     :straight nil
+    :defer t
     :mode ("\\.launch\\'" "\\.test\\'" "manifest.xml"))
   (use-package rng-loc
     :straight nil
+    :defer t
     :after nxml-mode
     :config
     (add-to-list 'rng-schema-locating-files (concat ros-site-lisp "rng-schemas.xml")))
@@ -39,6 +41,7 @@
   ;;; xml mode
   (use-package xml-mode
     :straight nil
+    :defer t
     :mode ("\\.urdf\\'" "\\.xacro\\'" "\\.world\\'" "\\.sdf\\'"))
 
   ;; rosbag view mode
