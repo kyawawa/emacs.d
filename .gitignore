@@ -2,6 +2,7 @@
 /auto-save-list
 /ido.last
 /smex-items
+/tramp
 /straight/*
 !/straight/versions/
 !/straight/.gitkeep
