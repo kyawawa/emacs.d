@@ -9,8 +9,13 @@
              (lambda (filename)
                (concat (locate-user-emacs-file "site-lisp/")
                        (file-name-sans-extension (file-name-nondirectory filename))
-                       ".elc"))))
-        (byte-recompile-directory (format "/opt/ros/%s/share/emacs/site-lisp" ROS_DISTRO) 0)))
+                       ".elc")))
+            (ros-site-lisp
+             (file-name-as-directory (format "/opt/ros/%s/share/emacs/site-lisp" ROS_DISTRO)))
+            )
+        (byte-compile-file (concat ros-site-lisp "rosbag-view-mode.el"))
+        (byte-compile-file (concat ros-site-lisp "rosemacs.el"))
+        ))
     ))
 
 ;; To autoload rng-loc
