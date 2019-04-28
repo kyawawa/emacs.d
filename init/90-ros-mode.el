@@ -29,7 +29,7 @@
     :straight nil
     :after nxml-mode
     :config
-    (add-to-list 'rng-schema-locating-files (concat ros-site-lisp "rng-schemas.xml")))  
+    (add-to-list 'rng-schema-locating-files (concat ros-site-lisp "rng-schemas.xml")))
 
   ;;; xml mode
   (use-package xml-mode
@@ -50,7 +50,7 @@
 (let ((ROS_DISTRO (getenv "ROS_DISTRO")))
   (when ROS_DISTRO
     (defvar ros-site-lisp (file-name-as-directory (format "/opt/ros/%s/share/emacs/site-lisp" ROS_DISTRO)))
-    (with-eval-after-load 'yasnippets
+    (with-eval-after-load 'yasnippet
       (add-to-list 'yas-snippet-dirs (concat ros-site-lisp "snippets")))
     (use-package rosemacs
       :straight nil
