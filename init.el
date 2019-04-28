@@ -125,6 +125,9 @@
 (show-paren-mode t)
 (setq show-paren-delay 0)
 
+;; Follow the symlink and visit the real file
+(setq vc-follow-symlinks t)
+
 ;;; add color tab, zenkaku-space, hankaku-space
 (defface my-tab-face '((t (:background "orange"))) nil)
 (defface my-zenkaku-face '((t (:background "gray10"))) nil)
