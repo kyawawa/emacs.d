@@ -262,11 +262,31 @@ are always included."
 ;;          )
 ;;   )
 
+(use-package popwin
+  :config
+  (setq display-buffer-function 'popwin:display-buffer))
+
+(use-package direx
+  :defer t
+  :after popwin
+  :bind
+  ("C-x C-j" . direx:jump-to-directory-other-window)
+  :config
+  (add-to-list 'popwin:special-display-config
+               '(direx:direx-mode :position left :width 35 :dedicated t))
+  :custom
+  (direx:leaf-icon "  ")
+  (direx:open-icon "- ")
+  (direx:closed-icon "+ "))
 
 ;; show undo-tree C-x u
 (use-package undo-tree
+  :after popwin
   :init
   (global-undo-tree-mode t)
+  :config
+  (add-to-list 'popwin:special-display-config
+               '(" *undo-tree*" :width 40 :position right))
   :bind
   (("M-/" . undo-tree-redo)
    :map undo-tree-visualizer-mode-map
