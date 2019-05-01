@@ -304,6 +304,9 @@
          "\\.body\\'"  ;; Choreonoid body file
          ))
 
+(use-package cmake-mode
+  :defer t)
+
 ;; Euslisp mode
 (use-package euslisp-mode
   :straight nil
