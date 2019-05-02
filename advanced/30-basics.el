@@ -114,7 +114,7 @@
   ;; タブ上でマウスホイール操作無効
   (tabbar-mwheel-mode -1)
   ;; グループ化しない
-  (defvar tabbar-buffer-groups-function nil)
+  ;; (setq tabbar-buffer-groups-function nil)
   ;; 左に表示されるボタンを無効化
   (dolist (btn '(tabbar-buffer-home-button
                  tabbar-scroll-left-button
