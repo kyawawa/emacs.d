@@ -1,5 +1,5 @@
 ;; -*- Mode: Emacs-Lisp; Coding: utf-8 -*-
-;;; 99-euslisp-mode.el --- Elisp settings for euslisp-mode
+;;; euslisp-mode.el --- Elisp settings for euslisp-mode
 
 ;; to change indent for euslisp's method definition ;; begin
 ;;;###autoload
@@ -29,9 +29,7 @@ that specifies how to do the indentation.  The property value can be
   the indentation.
 
 This function also returns nil meaning don't specify the indentation."
-  (let ((normal-indent (current-column))
-        (calculate-lisp-indent-last-sexp)
-        )
+  (let ((normal-indent (current-column)))
     (goto-char (1+ (elt state 1)))
     (parse-partial-sexp (point) calculate-lisp-indent-last-sexp 0 t)
     (if (and (elt state 2)
