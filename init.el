@@ -215,7 +215,7 @@
   :init
   (global-anzu-mode +1)
   (set-face-attribute 'anzu-mode-line nil
-                      :foreground "blue" :background "orange" :weight 'bold)
+                      :foreground "#0000ff" :background "orange" :weight 'bold)
   (bind-key* "M-r" 'anzu-query-replace (not (eq major-mode 'shell-mode)))
   :custom
   (anzu-mode-lighter "")
