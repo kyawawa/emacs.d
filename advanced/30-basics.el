@@ -200,6 +200,7 @@ are always included."
   ;;     (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
   :custom
   (ido-confirm-unique-completion t)
+  (ros-completion-function 'ido-completing-read) ;; For rosemacs
   )
 
 (use-package ido-completing-read+
