@@ -59,7 +59,7 @@
   :straight
   (:type git :host github :repo "leoliu/ggtags");; :branch "0.8.13")
   :hook
-  (c-mode-hook c++-mode-hook java-mode-hook asm-mode-hook)
+  ((c-mode c++-mode java-mode asm-mode) . (lambda () (ggtags-mode 1)))
   :bind (:map ggtags-mode-map
          ("C-c g s" . ggtags-find-other-symbol)
          ("C-c g h" . ggtags-view-tag-history)
