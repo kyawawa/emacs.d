@@ -84,3 +84,13 @@
                        "global" "-uv"))))
   (add-hook 'after-save-hook 'my-c-mode-update-gtags)
   )
+
+(use-package dummy-h-mode
+  :straight
+  (:type git :host github :repo "syohex/dummy-h-mode-el")
+  :mode "\\.h\\'"
+  :config
+  (add-hook 'dummy-h-mode-hook
+            (lambda ()
+              (setq dummy-h-mode-default-major-mode 'c++-mode)))
+  )
