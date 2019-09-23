@@ -97,6 +97,26 @@
                     (setq deactivate-mark nil))
     (tab-to-tab-stop)))
 
+;;; Replace region using s.el
+(defun apply-function-to-region (fn)
+  (interactive "XFunction to apply to region: ")
+  (save-excursion
+    (let* ((beg (region-beginning))
+           (end (region-end))
+           (resulting-text
+            (funcall
+             fn
+             (buffer-substring-no-properties beg end))))
+      (kill-region beg end)
+      (insert resulting-text))))
+
+(use-package s
+  :config
+  (defun convert-to-lower-camel ()
+    (interactive)
+    (apply-function-to-region 's-lower-camel-case))
+  )
+
 ;;; tabbar
 (use-package tabbar
   :init
