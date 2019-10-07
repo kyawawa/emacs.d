@@ -337,3 +337,12 @@ are always included."
      ("overleaf\\.com" . latex-mode)
      ))
   )
+
+(use-package jedi
+  :defer t
+  :init
+  (add-hook 'python-mode-hook 'jedi:setup)
+  :custom
+  (jedi:complete-on-dot t)
+  (jedi:use-shortcuts t) ;; M-. : jump definition, M-, : return from definition
+  )
