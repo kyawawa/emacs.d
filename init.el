@@ -293,6 +293,10 @@
 (use-package cmake-mode
   :defer t)
 
+(use-package dockerfile-mode
+  :defer t
+  :mode "Dockerfile\\'")
+
 ;; Euslisp mode
 (use-package euslisp-mode
   :straight nil
