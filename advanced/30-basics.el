@@ -346,3 +346,17 @@ are always included."
   (jedi:complete-on-dot t)
   (jedi:use-shortcuts t) ;; M-. : jump definition, M-, : return from definition
   )
+
+;; Docker
+(use-package dockerfile-mode
+  :defer t
+  :mode "Dockerfile\\'")
+
+;; /docker:container:/path/to/file
+(use-package docker-tramp
+  :custom
+  (docker-tramp-use-names t))
+
+(use-package docker-tramp-compat
+  :straight nil
+  :after docker-tramp)
