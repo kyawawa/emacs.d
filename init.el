@@ -261,7 +261,7 @@
   :init
   (dolist (mode-hook '(css-mode-hook  web-mode-hook
                        html-mode-hook vrml-mode-hook
-                       emacs-lisp-mode-hook))
+                       emacs-lisp-mode-hook qml-mode-hook))
     (add-hook mode-hook 'rainbow-mode)))
 
 ;;; Setting for minor modes

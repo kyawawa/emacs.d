@@ -1,17 +1,22 @@
 ;; -*- Mode: Emacs-Lisp; Coding: utf-8 -*-
 ;;; 90-ros-mode.el --- Elisp settings for ROS
 
+(defmacro ros1-distro ()
+  (let ((ROS_DISTRO (getenv "ROS_DISTRO"))
+        (ROS_VERSION (getenv "ROS_VERSION")))
+    (if (and ROS_DISTRO (eq ROS_VERSION 1)) ROS_DISTRO nil)))
+
 (eval-when-compile
   (message "Byte compile rosemacs")
-  (let ((ROS_DISTRO (getenv "ROS_DISTRO")))
-    (when ROS_DISTRO
+  (let ((ROS1_DISTRO (ros1-distro)))
+    (when ROS1_DISTRO
       (let ((byte-compile-dest-file-function
              (lambda (filename)
                (concat (locate-user-emacs-file "site-lisp/")
                        (file-name-sans-extension (file-name-nondirectory filename))
                        ".elc")))
             (ros-site-lisp
-             (file-name-as-directory (format "/opt/ros/%s/share/emacs/site-lisp" ROS_DISTRO)))
+             (file-name-as-directory (format "/opt/ros/%s/share/emacs/site-lisp" ROS1_DISTRO)))
             )
         (byte-compile-file (concat ros-site-lisp "rosbag-view-mode.el"))
         (byte-compile-file (concat ros-site-lisp "rosemacs.el"))
@@ -55,9 +60,9 @@
                           '(("\\<\\(bool\\|byte\\|int8\\|uint8\\|int16\\|uint16\\|int32\\|uint32\\|int64\\|uint64\\|float32\\|float64\\|string\\|time\\|duration\\)\\>" . font-lock-builtin-face)) 'set))
 
 ;; sudo apt install ros-${ROSDISTRO}-rosemacs
-(let ((ROS_DISTRO (getenv "ROS_DISTRO")))
-  (when ROS_DISTRO
-    (defvar ros-site-lisp (file-name-as-directory (format "/opt/ros/%s/share/emacs/site-lisp" ROS_DISTRO)))
+(let ((ROS1_DISTRO (ros1-distro)))
+  (when ROS1_DISTRO
+    (defvar ros-site-lisp (file-name-as-directory (format "/opt/ros/%s/share/emacs/site-lisp" ROS1_DISTRO)))
     (with-eval-after-load 'yasnippet
       (add-to-list 'yas-snippet-dirs (concat ros-site-lisp "snippets")))
     (use-package rosemacs

@@ -27,9 +27,12 @@
 
 ;;; Auto insert
 ;; TODO: http://d.hatena.ne.jp/higepon/20080731/1217491155
-(add-hook 'find-file-not-found-hooks 'auto-insert)
+;; TODO: 初回ビルド時にauto-insertが暴発する(wsl ubuntu20.04) <- :hookにより解決?
 (use-package autoinsert
+  :straight nil
   :defer t
+  ;; :hook (find-file-not-found . auto-insert)
+  :hook (find-file . auto-insert)
   :config
   (setq auto-insert-directory (locate-user-emacs-file "templates/"))
   (setq auto-insert-alist
@@ -336,15 +339,6 @@ are always included."
    '(("github\\.com" . gfm-mode)
      ("overleaf\\.com" . latex-mode)
      ))
-  )
-
-(use-package jedi
-  :defer t
-  :init
-  (add-hook 'python-mode-hook 'jedi:setup)
-  :custom
-  (jedi:complete-on-dot t)
-  (jedi:use-shortcuts t) ;; M-. : jump definition, M-, : return from definition
   )
 
 ;; Docker
