@@ -65,6 +65,9 @@
 (with-current-buffer "*Messages*"
   (emacs-lock-mode 'kill))
 
+(when (member "Cica" (font-family-list))
+  (add-to-list 'default-frame-alist '(font . "Cica-Regular 14")))
+
 ;; Share clipboard
 (use-package xclip
   :config
