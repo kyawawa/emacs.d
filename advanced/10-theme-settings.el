@@ -27,6 +27,9 @@
   ;; Memo: Autumn theme
   ;; (setq cyberpunk-pink "#ff9500")
   ;; (setq cyberpunk-pink-1 "#ff0000")
-  (load-theme 'cyberpunk t))
+  (load-theme 'cyberpunk t)
+  :config
+  (set-background-color "#1e1e1e")
+  )
 
 (provide 'theme-settings)
