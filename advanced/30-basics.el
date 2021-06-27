@@ -354,3 +354,17 @@ are always included."
 (use-package docker-tramp-compat
   :straight nil
   :after docker-tramp)
+
+;; QML for Qt
+(use-package qml-mode
+  :defer t
+  :mode "\\.qml\\'"
+  :config
+  ;; Change comment style from /* */ to //
+  (with-eval-after-load 'qml-mode
+    (defun my-qml-style()
+      (setq comment-start "//")
+      (setq comment-end "")
+      )
+    (add-hook 'qml-mode-hook 'my-qml-style))
+  )

@@ -32,8 +32,3 @@
   :defer t
   :after elpy
   :hook ((elpy-mode-hook . poetry-tracking-mode)))
-
-;; QML for Qt
-(use-package qml-mode
-  :defer t
-  :mode "\\.qml\\'")
