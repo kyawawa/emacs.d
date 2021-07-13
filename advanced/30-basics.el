@@ -251,40 +251,48 @@ are always included."
   ;; ("M-x" . execute-extended-command)
   )
 
-;;; http://qiita.com/sune2/items/b73037f9e85962f5afb7
-;; (use-package company-statistics)
-;; (use-package company
-;;   :after company-statistics
-;;   :config
-;;   (add-hook 'after-init-hook 'global-company-mode)
-;;   ;; (add-hook 'cmake-mode-hook 'company-mode)
-;;   ;; (add-hook 'LaTeX-mode-hook 'company-mode)
-;;   (setq company-idle-delay 0) ; デフォルトは0.5
-;;   (setq company-minimum-prefix-length 2) ; デフォルトは4
-;;   (setq company-selection-wrap-around t) ; 候補の一番下でさらに下に行こうとすると一番上に戻る
-;;   (setq company-transformers '(company-sort-by-statistics company-sort-by-backend-importance))
-;;   (set-face-attribute 'company-tooltip nil
-;;                       :foreground "black" :background "lightgrey")
-;;   (set-face-attribute 'company-tooltip-common nil
-;;                       :foreground "black" :background "lightgrey")
-;;   (set-face-attribute 'company-tooltip-common-selection nil
-;;                       :foreground "white" :background "steelblue")
-;;   (set-face-attribute 'company-tooltip-selection nil
-;;                       :foreground "black" :background "steelblue")
-;;   (set-face-attribute 'company-preview-common nil
-;;                       :background nil :foreground "lightgrey" :underline t)
-;;   (set-face-attribute 'company-scrollbar-fg nil
-;;                       :background "orange")
-;;   (set-face-attribute 'company-scrollbar-bg nil
-;;                       :background "gray40")
-;;   :bind (:map company-active-map
-;;          ("M-n" . nil)
-;;          ("M-p" . nil)
-;;          ("C-n" . company-select-next)
-;;          ("C-p" . company-select-previous)
-;;          ("C-h" . nil)
-;;          )
-;;   )
+(use-package company
+  :init
+  (add-hook 'after-init-hook 'global-company-mode)
+  :custom
+  (company-idle-delay 0)
+  (company-minimum-prefix-length 2)
+  (company-selection-wrap-around t)
+  :bind
+  ;; ("M-/" . company-complete-common-or-cycle)
+  ("C-TAB" . company-complete)
+  (bind-keys :map company-active-map
+             ("C-n" . company-select-next)
+             ("C-p" . company-select-previous))
+  (bind-keys :map company-search-map
+             ("C-n" . company-select-next)
+             ("C-p" . company-select-previous))
+  (bind-keys :map company-active-map
+             ("<tab>" . company-complete-selection))
+  ;; :config
+  ;; (eval-after-load "shell"
+  ;;   '(define-key shell-mode-map (kbd "TAB") #'company-complete))
+  ;; (add-hook 'shell-mode-hook #'company-mode)
+  )
+
+(use-package flycheck
+  :init
+  (global-flycheck-mode))
+
+;; lsp-mode TODO: use eglot
+(use-package lsp-mode
+  :hook ((python-mode c++-mode) . lsp)
+  :commands lsp
+  :config
+  (setq lsp-prefer-flymake nil)
+  (setq lsp-clients-clangd-executable "clangd")
+  )
+
+(use-package lsp-ui
+  :commands lsp-ui-mode)
+
+(use-package company-lsp
+  :commands company-lsp)
 
 (use-package popwin
   :config
@@ -355,7 +363,7 @@ are always included."
   :straight nil
   :after docker-tramp)
 
-;; QML for Qt
+;; Qt
 (use-package qml-mode
   :defer t
   :mode "\\.qml\\'"
@@ -368,3 +376,25 @@ are always included."
       )
     (add-hook 'qml-mode-hook 'my-qml-style))
   )
+
+(add-to-list 'auto-mode-alist '("\\.qrc\\'" . nxml-mode))
+
+;; rust
+(use-package rustic
+  :straight
+  (:type git :host github :repo "brotzeit/rustic")
+  :custom
+  ;; (rustic-format-trigger 'on-save)
+  (rustic-lsp-server 'rls)
+  (rustic-lsp-client 'eglot)
+  )
+
+(use-package eglot)
+
+;; Powershell
+(use-package powershell
+  ;; Use old powershell due to problem, see
+  ;; https://github.com/jschaf/powershell.el/issues/31
+  ;; :custom
+  ;; (powershell-location-of-exe (or (executable-find "pwsh") (executable-find "powershell")))
+ )

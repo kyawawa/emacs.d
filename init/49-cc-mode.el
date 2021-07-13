@@ -55,6 +55,11 @@
                       ))
                )))
 
+;; (use-package modern-cpp-font-lock
+;;   :init
+;;   (modern-c++-font-lock-global-mode t)
+;;   )
+
 (use-package ggtags
   :straight
   (:type git :host github :repo "leoliu/ggtags");; :branch "0.8.13")

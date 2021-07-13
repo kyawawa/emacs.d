@@ -1,8 +1,6 @@
 ;; -*- Mode: Emacs-Lisp; Coding: utf-8 -*-
 ;;; init.el --- Minimum init.el for general use.
 
-;; Author: Tatsuya Ishikawa <ishikawa@jsk.imi.i.u-tokyo.ac.jp>
-
 (defvar bootstrap-version)
 (defvar straight-check-for-modifications '(check-on-save find-when-checking))
 (let ((bootstrap-file
@@ -65,8 +63,14 @@
 (with-current-buffer "*Messages*"
   (emacs-lock-mode 'kill))
 
+;;; Windows settings
 (when (member "Cica" (font-family-list))
   (add-to-list 'default-frame-alist '(font . "Cica-Regular 14")))
+
+;; (set-default-coding-systems 'utf-8-unix)
+;; (set-keyboard-coding-system 'utf-8-unix)
+;; (prefer-coding-system 'utf-8-unix)
+;;; End Windows settings
 
 ;; Share clipboard
 (use-package xclip
@@ -274,12 +278,12 @@
   (add-hook mode-hook '(lambda () (set (make-local-variable 'electric-indent-mode) nil))))
 
 ;; shell mode
-(defvar shell-command-option "-c")
-(use-package bash-completion
-  :hook shell-mode
-  :config
-  (add-hook 'shell-dynamic-complete-functions
-            'bash-completion-dynamic-complete))
+;; (defvar shell-command-option "-c")
+;; (use-package bash-completion
+;;   :hook shell-mode
+;;   :config
+;;   (add-hook 'shell-dynamic-complete-functions
+;;             'bash-completion-dynamic-complete))
 
 ;; vrml mode
 (use-package vrml-mode

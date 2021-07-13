@@ -9,3 +9,7 @@
 /init/10-theme-settings.el
 /init/30-basics.el
 /init/71-tex-mode.el
+/elpa
+/eshell
+/transient
+/elpy
