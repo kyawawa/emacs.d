@@ -258,9 +258,6 @@ are always included."
   (company-idle-delay 0)
   (company-minimum-prefix-length 2)
   (company-selection-wrap-around t)
-  :bind
-  ;; ("M-/" . company-complete-common-or-cycle)
-  ("C-TAB" . company-complete)
   (bind-keys :map company-active-map
              ("C-n" . company-select-next)
              ("C-p" . company-select-previous))
@@ -269,6 +266,9 @@ are always included."
              ("C-p" . company-select-previous))
   (bind-keys :map company-active-map
              ("<tab>" . company-complete-selection))
+  :bind
+  ;; ("M-/" . company-complete-common-or-cycle)
+  ("C-TAB" . company-complete)
   ;; :config
   ;; (eval-after-load "shell"
   ;;   '(define-key shell-mode-map (kbd "TAB") #'company-complete))
