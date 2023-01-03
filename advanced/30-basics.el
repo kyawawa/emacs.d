@@ -16,14 +16,6 @@
 ;;; Delete endline whitespace with saving files
 ;; (add-hook 'before-save-hook 'delete-trailing-whitespace)
 (defvar delete-trailing-whitespece-before-save t)
-(defun my-delete-trailing-whitespace ()
-  (if delete-trailing-whitespece-before-save
-      (delete-trailing-whitespace)))
-(add-hook 'before-save-hook 'my-delete-trailing-whitespace)
-;; Disable delete-trailing-whitespace at some modes below
-(add-hook 'markdown-mode-hook
-          '(lambda ()
-             (set (make-local-variable 'delete-trailing-whitespece-before-save) nil)))
 
 ;;; Auto insert
 ;; TODO: http://d.hatena.ne.jp/higepon/20080731/1217491155
@@ -67,7 +59,7 @@
 ;; http://d.hatena.ne.jp/mtv/20110925/p1
 (global-set-key (kbd "<backtab>") 'backtab-line-or-region)
 (defun backtab()
-  "Do reverse indentation"
+  "Do reverse indentation."
   (interactive)
   (back-to-indentation)
   (delete-char
@@ -281,15 +273,40 @@ are always included."
 
 ;; lsp-mode TODO: use eglot
 (use-package lsp-mode
-  :hook ((python-mode c++-mode) . lsp)
+  :ensure
+  :hook ((python-mode) . lsp)
   :commands lsp
-  :config
-  (setq lsp-prefer-flymake nil)
-  (setq lsp-clients-clangd-executable "clangd")
+  :custom
+  (lsp-prefer-flymake nil)
+  ;; (lsp-clients-clangd-executable "clangd")
+  (lsp-eldoc-render-all t)
+  (lsp-idle-delay 0.6)
+  ;;; rust settings
+   ;; what to use when checking on-save. "check" is default, I prefer clippy
+  (lsp-rust-analyzer-cargo-watch-command "clippy")
+  ;; This controls the overlays that display type and other hints inline. Enable
+  ;; / disable as you prefer. Well require a `lsp-workspace-restart' to have an
+  ;; effect on open projects.
+  (lsp-rust-analyzer-server-display-inlay-hints t)
+  (lsp-rust-analyzer-display-lifetime-elision-hints-enable "skip_trivial")
+  (lsp-rust-analyzer-display-chaining-hints t)
+  (lsp-rust-analyzer-display-lifetime-elision-hints-use-parameter-names nil)
+  (lsp-rust-analyzer-display-closure-return-type-hints t)
+  (lsp-rust-analyzer-display-parameter-hints nil)
+  (lsp-rust-analyzer-display-reborrow-hints nil)
   )
 
 (use-package lsp-ui
-  :commands lsp-ui-mode)
+  :hook ((lsp-mode) . lsp-ui)
+  :commands lsp-ui-mode
+  :bind
+  ("M-j" . lsp-ui-imenu)
+  ("M-?" . lsp-find-references)
+  :custom
+  (lsp-ui-peek-always-show t)
+  (lsp-ui-sideline-show-hover t)
+  (lsp-ui-doc-enable nil)
+  )
 
 (use-package company-lsp
   :commands company-lsp)
@@ -377,16 +394,45 @@ are always included."
     (add-hook 'qml-mode-hook 'my-qml-style))
   )
 
+(use-package toml-mode
+  :straight
+  (:type git :host github :repo "dryman/toml-mode.el")
+  :defer t
+  )
+
 (add-to-list 'auto-mode-alist '("\\.qrc\\'" . nxml-mode))
 
 ;; rust
+;; $ git clone https://github.com/rust-analyzer/rust-analyzer.git
+;; $ cd rust-analyzer
+;; $ cargo xtask install --server # will install rust-analyzer into $HOME/.cargo/bin
+
 (use-package rustic
   :straight
   (:type git :host github :repo "brotzeit/rustic")
   :custom
-  ;; (rustic-format-trigger 'on-save)
-  (rustic-lsp-server 'rls)
+  (rustic-format-trigger 'on-save)
+  ;; (rustic-lsp-server 'rls)
   (rustic-lsp-client 'eglot)
+  :bind (:map rustic-mode-map
+              ("C-c C-c l" . flycheck-list-errors)
+              ("C-c C-c a" . lsp-execute-code-action)
+              ("C-c C-c r" . lsp-rename)
+              ("C-c C-c q" . lsp-workspace-restart)
+              ("C-c C-c Q" . lsp-workspace-shutdown)
+              ("C-c C-c s" . lsp-rust-analyzer-status)
+              ("C-c C-c e" . lsp-rust-analyzer-expand-macro)
+              ("C-c C-c d" . dap-hydra)
+              ("C-c C-c h" . lsp-ui-doc-glance) ;; TODO: lsp setting
+              ("C-c s" . (lambda() (interactive)
+                           (print "Execute current file by rust-script" t)
+                           (print
+                            (shell-command-to-string
+                             (mapconcat #'shell-quote-argument
+                                        (list "rust-script" (buffer-file-name))
+                                        " "))
+                            t)))
+              )
   )
 
 (use-package eglot)
@@ -398,3 +444,7 @@ are always included."
   ;; :custom
   ;; (powershell-location-of-exe (or (executable-find "pwsh") (executable-find "powershell")))
  )
+
+(provide '30-basics)
+
+;;; 30-basics.el ends here
