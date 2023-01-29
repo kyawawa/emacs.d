@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: FetchContent
+# key: fc
+# type: command
+# --
+(let ((name (read-string "Enter Project Name: ")))
+  (setq snippet-text "FetchContent_Declare(\n")
+  (setq snippet-text (format "%s  %s\n" snippet-text name))
+  (setq snippet-text (format "%s  GIT_REPOSITORY\n" snippet-text))
+  (setq snippet-text (format "%s  SOURCE_DIR \\${CMAKE_CURRENT_SOURCE_DIR}/%s\n" snippet-text name))
+  (setq snippet-text (format "%s)\n" snippet-text))
+  (setq snippet-text (format "%sFetchContent_MakeAvailable(%s)\n" snippet-text name))
+  (yas/expand-snippet snippet-text))

@@ -31,7 +31,6 @@
         (append '(("\\.l$" . "template.l")
                   ("\\.sh$" . "template.sh")
                   ("\\.bash$" . "template.sh")
-                  ("Makefile$" . "template.Makefile")
                   ("\\.cpp$" . ["template.cpp" my-template])
                   ("\\.h$" . ["template.h" my-template])
                   ("\\.py$" . "template.py")
@@ -39,6 +38,8 @@
                   ("\\.lua$" . "template.lua")
                   ("\\.launch$" . "template.launch")
                   ("\\.html$" . "template.html")
+                  ("Makefile$" . "template.Makefile")
+                  ("CMakeLists.txt" . "template.CMakeLists")
                   ) auto-insert-alist))
   (defvar template-replacements-alists
     '(("%file%"             . (lambda () (file-name-nondirectory (buffer-file-name))))
