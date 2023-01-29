@@ -423,7 +423,8 @@ are always included."
               ("C-c C-c s" . lsp-rust-analyzer-status)
               ("C-c C-c e" . lsp-rust-analyzer-expand-macro)
               ("C-c C-c d" . dap-hydra)
-              ("C-c C-c h" . lsp-ui-doc-glance) ;; TODO: lsp setting
+              ("C-c C-c h" . lsp-ui-doc-glance)
+              ("C-c C-r r" . rustic-cargo-run)
               ("C-c s" . (lambda() (interactive)
                            (print "Execute current file by rust-script" t)
                            (print
