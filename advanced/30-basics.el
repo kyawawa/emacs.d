@@ -1,4 +1,4 @@
-;; -*- Mode: Emacs-Lisp; Coding: utf-8 -*-
+;; -*- Mode: Emacs-Lisp; Coding: utf-8; no-compile: t -*-
 
 ;; paste with indent
 (defun yank-with-indent ()
@@ -238,8 +238,8 @@ are always included."
   :init
   (smex-initialize)
   :bind
-  ("M-x" . smex)
-  ("M-X" . smex-major-mode-commands)
+  (("M-x" . smex)
+   ("M-X" . smex-major-mode-commands))
   ;; This is your old M-x.
   ;; ("M-x" . execute-extended-command)
   )
@@ -251,15 +251,13 @@ are always included."
   (company-idle-delay 0)
   (company-minimum-prefix-length 2)
   (company-selection-wrap-around t)
-  (bind-keys :map company-active-map
-             ("C-n" . company-select-next)
-             ("C-p" . company-select-previous))
-  (bind-keys :map company-search-map
-             ("C-n" . company-select-next)
-             ("C-p" . company-select-previous))
-  (bind-keys :map company-active-map
-             ("<tab>" . company-complete-selection))
-  :bind
+  :bind (:map company-active-map
+         ("C-n" . company-select-next)
+         ("C-p" . company-select-previous)
+         ("<tab>" . company-complete-selection)
+         :map company-search-map
+         ("C-n" . company-select-next)
+         ("C-p" . company-select-previous))
   ;; ("M-/" . company-complete-common-or-cycle)
   ("C-TAB" . company-complete)
   ;; :config
@@ -341,6 +339,8 @@ are always included."
   (("M-/" . undo-tree-redo)
    :map undo-tree-visualizer-mode-map
    ("C-g" . undo-tree-visualizer-quit))
+  :custom
+  (undo-tree-auto-save-history nil)
   )
 
 (use-package yasnippet
@@ -396,8 +396,8 @@ are always included."
   )
 
 (use-package toml-mode
-  :straight
-  (:type git :host github :repo "dryman/toml-mode.el")
+  ;; :straight
+  ;; (:type git :host github :repo "dryman/toml-mode.el")
   :defer t
   )
 
@@ -438,6 +438,8 @@ are always included."
   )
 
 (use-package eglot)
+
+(use-package project)
 
 ;; Powershell
 (use-package powershell

@@ -1,4 +1,4 @@
-;; -*- Mode: Emacs-Lisp; Coding: utf-8 -*-
+;; -*- Mode: Emacs-Lisp; Coding: utf-8; no-compile: t -*-
 ;;; theme-settings.el --- Elisp theme settings
 
 ;; (add-hook 'tty-setup-hook '(lambda () (set-terminal-parameter nil 'background-mode 'dark)))

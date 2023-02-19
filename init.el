@@ -1,5 +1,8 @@
-;; -*- Mode: Emacs-Lisp; Coding: utf-8 -*-
-;;; init.el --- Minimum init.el for general use.
+;;; -*- Mode: Emacs-Lisp; Coding: utf-8 -*-
+;;; Code:
+
+;; (require 'profiler)
+;; (profiler-start 'cpu)
 
 (defvar bootstrap-version)
 (defvar straight-check-for-modifications '(check-on-save find-when-checking))
@@ -17,18 +20,18 @@
 
 (add-to-list 'load-path (locate-user-emacs-file "site-lisp"))
 
-(eval-when-compile
-  (message "Byte compile site-lisp")
-  (byte-recompile-directory (locate-user-emacs-file "site-lisp") 0)
-  )
+;; (eval-when-compile
+;;   (message "Byte compile site-lisp")
+;;   (byte-recompile-directory (locate-user-emacs-file "site-lisp") 0)
+;;   )
 
 ;; Byte compile when opening emacs if init.el is newer than init.elc
-(add-hook 'after-init-hook
-          '(lambda ()
-             (let* ((el (expand-file-name "init.el" user-emacs-directory))
-                    (elc (concat el "c")))
-               (when (file-newer-than-file-p el elc)
-                 (byte-compile-file el)))))
+;; (add-hook 'after-init-hook
+;;           #'(lambda ()
+;;              (let* ((el (expand-file-name "init.el" user-emacs-directory))
+;;                     (elc (concat el "c")))
+;;                (when (file-newer-than-file-p el elc)
+;;                  (byte-compile-file el)))))
 
 (straight-use-package 'use-package)
 ;; use-package will use straight.el to automatically install missing packages
@@ -39,16 +42,18 @@
   :init
   (init-loader-load (expand-file-name "init" user-emacs-directory))
   :custom
-  (init-loader-byte-compile t)
-  (init-loader-show-log-after-init 'error-only))
+  ;; (init-loader-byte-compile t)
+  (init-loader-show-log-after-init 'error-only)
+  )
+
+(add-hook 'emacs-startup-hook
+          #'(lambda ()
+              "Recover GC values after startup."
+              (setq gc-cons-threshold 16777216))) ;; 16MB
 
 ;; Change color theme
-(add-hook 'tty-setup-hook '(lambda () (set-terminal-parameter nil 'background-mode 'dark)))
+(add-hook 'tty-setup-hook #'(lambda () (set-terminal-parameter nil 'background-mode 'dark)))
 
-;; Hidden tool bar
-(tool-bar-mode -1)
-;; Hidden menu bar
-(menu-bar-mode -1)
 ;; Auto reload when file is changed
 (global-auto-revert-mode 1)
 ;; Show line and column number
@@ -111,8 +116,8 @@
 (add-hook 'before-save-hook 'my-delete-trailing-whitespace)
 ;; Disable delete-trailing-whitespace at some modes below
 (add-hook 'markdown-mode-hook
-          '(lambda ()
-             (set (make-local-variable 'delete-trailing-whitespece-before-save) nil)))
+          #'(lambda ()
+              (set (make-local-variable 'delete-trailing-whitespece-before-save) nil)))
 
 ;; Show paren
 (show-paren-mode t)
@@ -200,7 +205,7 @@
                      lisp-mode-hook
                      python-mode-hook
                      ruby-mode-hook))
-  (add-hook mode-hook '(lambda () (hs-minor-mode t))))
+  (add-hook mode-hook #'(lambda () (hs-minor-mode t))))
 (bind-key "C-c ;" 'hs-toggle-hiding)
 
 ;;; anzu
@@ -233,7 +238,7 @@
 (use-package git-modes
   :defer t
   :config
-  (add-hook 'gitconfig-mode-hook '(lambda () (setq indent-tabs-mode nil))))
+  (add-hook 'gitconfig-mode-hook #'(lambda () (setq indent-tabs-mode nil))))
 
 (use-package git-gutter
   :init
@@ -267,15 +272,15 @@
 (use-package rainbow-mode
   :init
   (dolist (mode-hook '(css-mode-hook  web-mode-hook
-                       html-mode-hook vrml-mode-hook
-                       emacs-lisp-mode-hook qml-mode-hook))
+                                      html-mode-hook vrml-mode-hook
+                                      emacs-lisp-mode-hook qml-mode-hook))
     (add-hook mode-hook 'rainbow-mode)))
 
 ;;; Setting for minor modes
 
 (dolist (mode-hook '(python-mode-hook))
-  ;; (add-hook mode-hook '(lambda () (electric-indent-local-mode -1)))) ;; for emacs 24.4 or above
-  (add-hook mode-hook '(lambda () (set (make-local-variable 'electric-indent-mode) nil))))
+  ;; (add-hook mode-hook #'(lambda () (electric-indent-local-mode -1)))) ;; for emacs 24.4 or above
+  (add-hook mode-hook #'(lambda () (set (make-local-variable 'electric-indent-mode) nil))))
 
 ;; shell mode
 ;; (defvar shell-command-option "-c")
@@ -313,3 +318,8 @@
  '(completions-first-difference ((t (:inherit bold :foreground "color-164"))))
  '(font-lock-warning-face ((t (:foreground "#ff3700"))))
  '(query-replace ((t (:inherit isearch :background "color-40")))))
+
+;; (profiler-report)
+;; (profiler-stop)
+
+;;; init.el ends here

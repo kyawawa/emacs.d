@@ -1,4 +1,4 @@
-;; -*- Mode: Emacs-Lisp; Coding: utf-8 -*-
+;; -*- Mode: Emacs-Lisp; Coding: utf-8; no-compile: t -*-
 ;;; tex-mode.el --- Elisp settings for TeX
 
 (use-package auctex

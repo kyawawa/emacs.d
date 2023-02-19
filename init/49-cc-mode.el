@@ -1,4 +1,4 @@
-;; -*- Mode: Emacs-Lisp; Coding: utf-8 -*-
+;; -*- Mode: Emacs-Lisp; Coding: utf-8; no-compile: t -*-
 ;;; 49-cc-mode.el --- Elisp settings for cc-mode
 
 (with-eval-after-load 'cc-mode

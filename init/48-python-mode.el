@@ -1,4 +1,4 @@
-;; -*- Mode: Emacs-Lisp; Coding: utf-8 -*-
+;; -*- Mode: Emacs-Lisp; Coding: utf-8; no-compile: t -*-
 ;;; 48-python-mode.el --- Elisp settings for python-mode
 
 ;; (use-package jedi

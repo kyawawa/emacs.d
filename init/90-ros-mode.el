@@ -1,4 +1,4 @@
-;; -*- Mode: Emacs-Lisp; Coding: utf-8 -*-
+;; -*- Mode: Emacs-Lisp; Coding: utf-8; no-compile: t -*-
 ;;; 90-ros-mode.el --- Elisp settings for ROS
 
 (defmacro ros1-distro ()
