@@ -335,6 +335,8 @@ are always included."
   :config
   (add-to-list 'popwin:special-display-config
                '(" *undo-tree*" :width 40 :position right))
+  :custom
+  (undo-tree-auto-save-history nil)
   :bind
   (("M-/" . undo-tree-redo)
    :map undo-tree-visualizer-mode-map

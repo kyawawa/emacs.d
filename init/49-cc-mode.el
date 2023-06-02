@@ -13,6 +13,7 @@
     (setq c-basic-offset 4)
     (setq tab-width 4)
     (setq indent-tabs-mode nil)
+    (setq font-lock-maximum-decoration 2)
     (hs-minor-mode t)
     )
   ;; Customizations for both c-mode and c++-mode
