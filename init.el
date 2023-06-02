@@ -283,8 +283,9 @@
 (use-package rainbow-mode
   :init
   (dolist (mode-hook '(css-mode-hook  web-mode-hook
-                                      html-mode-hook vrml-mode-hook
-                                      emacs-lisp-mode-hook qml-mode-hook))
+                       html-mode-hook vrml-mode-hook
+                       emacs-lisp-mode-hook qml-mode-hook
+                       python-mode-hook))
     (add-hook mode-hook 'rainbow-mode)))
 
 ;;; Setting for minor modes
