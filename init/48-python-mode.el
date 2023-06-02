@@ -17,9 +17,11 @@
   (add-hook 'python-mode-hook (lambda () (interactive) (column-marker-3 80)))
   )
 
-(use-package py-isort
+(use-package python-isort
+  :straight
+  (:type git :host github :repo "wyuenho/emacs-python-isort")
   :defer t
-  :hook ((before-save-hook . py-isort-before-save)))
+  :hook (python-mode . python-isort-on-save-mode))
 
 (use-package elpy
   :defer t
