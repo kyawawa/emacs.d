@@ -254,7 +254,7 @@
   (set-face-foreground 'git-gutter:deleted "red")
   (set-face-foreground 'git-gutter:separator "blue")
   :bind
-  ("C-x g" . git-gutter-mode)
+  ;; ("C-x g" . git-gutter-mode)
   ("C-x v =" . git-gutter:popup-hunk)
   ("C-x p" . git-gutter:previous-hunk)
   ("C-x n" . git-gutter:next-hunk)
@@ -267,6 +267,17 @@
   (git-gutter:deleted-sign "-")
   (git-gutter:separator-sign "|")
   (git-gutter:always-show-separator t))
+
+;; magit
+(use-package magit
+  :init
+  (defalias 'magit 'magit-status)
+  :bind
+  ("C-x g" . magit-status)
+  )
+
+(setenv "GIT_EDITOR" "emacsclient")
+(add-hook 'shell-mode-hook 'with-editor-export-git-editor)
 
 ;;; rainbow-mode
 (use-package rainbow-mode
