@@ -383,6 +383,19 @@ are always included."
   :straight nil
   :after docker-tramp)
 
+;; Markdown
+(use-package markdown-mode
+  :mode (("\\.markdown\\'" . markdown-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("README\\.md\\'" . gfm-mode)
+         )
+  :custom
+  ;; always open the preview window at the right
+  (markdown-split-window-direction 'right)
+  ;; delete exported HTML file after markdown-live-preview-export is called
+  (markdown-live-preview-delete-export 'delete-on-export)
+  )
+
 ;; Qt
 (use-package qml-mode
   :defer t
