@@ -452,6 +452,9 @@ are always included."
               )
   )
 
+;; C#
+(use-package csharp-mode)
+
 (use-package eglot)
 
 (use-package project)
