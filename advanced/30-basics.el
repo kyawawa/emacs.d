@@ -465,7 +465,15 @@ are always included."
   ;; https://github.com/jschaf/powershell.el/issues/31
   ;; :custom
   ;; (powershell-location-of-exe (or (executable-find "pwsh") (executable-find "powershell")))
- )
+  )
+
+;; CSV
+(use-package csv-mode
+  :defer t
+  :hook ((csv-mode) . csv-align-mode)
+  :init
+  (add-hook 'csv-mode-hook '(lambda () (interactive) (toggle-truncate-lines nil)))
+  )
 
 (provide '30-basics)
 
