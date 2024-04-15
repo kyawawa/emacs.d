@@ -374,15 +374,6 @@ are always included."
   :defer t
   :mode "Dockerfile\\'")
 
-;; /docker:container:/path/to/file
-(use-package docker-tramp
-  :custom
-  (docker-tramp-use-names t))
-
-(use-package docker-tramp-compat
-  :straight nil
-  :after docker-tramp)
-
 ;; Markdown
 (use-package markdown-mode
   :mode (("\\.markdown\\'" . markdown-mode)
@@ -451,9 +442,6 @@ are always included."
                             t)))
               )
   )
-
-;; C#
-(use-package csharp-mode)
 
 (use-package eglot)
 
