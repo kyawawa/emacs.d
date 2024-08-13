@@ -2,9 +2,8 @@
 ;;; 90-ros-mode.el --- Elisp settings for ROS
 
 (defmacro ros1-distro ()
-  (let ((ROS_DISTRO (getenv "ROS_DISTRO"))
-        (ROS_VERSION (getenv "ROS_VERSION")))
-    (if (and ROS_DISTRO (eq ROS_VERSION 1)) ROS_DISTRO nil)))
+  (let ((ROS_DISTRO (getenv "ROS_DISTRO")))
+    (if (and ROS_DISTRO (eq (string-to-number (getenv "ROS_VERSION")) 1)) ROS_DISTRO nil)))
 
 (eval-when-compile
   (message "Byte compile rosemacs")
