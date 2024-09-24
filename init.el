@@ -152,6 +152,7 @@
 (bind-key* "\C-xL" 'goto-line)
 (bind-key* "\C-xR" 'revert-buffer)
 (bind-key* "C-x k" (lambda () (interactive) (kill-buffer (buffer-name))))
+(bind-key* "C-S-k" 'kill-whole-line)
 
 ;;; Rectangle mark
 ;; C-x Space ( M-x cua-set-rectangle-mark ) 矩形モード開始
