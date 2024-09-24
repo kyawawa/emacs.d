@@ -69,8 +69,8 @@
   (emacs-lock-mode 'kill))
 
 ;;; Windows settings
-(when (member "Cica" (font-family-list))
-  (add-to-list 'default-frame-alist '(font . "Cica-Regular 14")))
+(when (member "Cascadia Code" (font-family-list))
+  (add-to-list 'default-frame-alist '(font . "Cascadia Code 14")))
 
 ;; (set-default-coding-systems 'utf-8-unix)
 ;; (set-keyboard-coding-system 'utf-8-unix)
