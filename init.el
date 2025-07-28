@@ -201,13 +201,33 @@
 
 ;;; For folding
 ;; http://d.hatena.ne.jp/yutoichinohe/20121119/1353321674
-(dolist (mode-hook '(scheme-mode-hook
-                     emacs-lisp-mode-hook
-                     lisp-mode-hook
-                     python-mode-hook
-                     ruby-mode-hook))
-  (add-hook mode-hook #'(lambda () (hs-minor-mode t))))
-(bind-key "C-c ;" 'hs-toggle-hiding)
+;; (dolist (mode-hook '(scheme-mode-hook
+;;                      emacs-lisp-mode-hook
+;;                      lisp-mode-hook
+;;                      python-mode-hook
+;;                      ruby-mode-hook))
+;;   (add-hook mode-hook #'(lambda () (hs-minor-mode t))))
+;; (bind-key "C-c ;" 'hs-toggle-hiding)
+(use-package origami
+  :demand
+  :config
+  (define-prefix-command 'origami-mode-map)
+  (define-key ctl-x-map (kbd "z") 'origami-mode-map)
+  (global-origami-mode)
+  :bind
+  (:map origami-mode-map
+        ("o" . origami-open-node)
+        ("O" . origami-open-node-recursively)
+        ("c" . origami-close-node)
+        ("C" . origami-close-node-recursively)
+        ("a" . origami-toggle-node)
+        ("A" . origami-recursively-toggle-node)
+        ("R" . origami-open-all-nodes)
+        ("M" . origami-close-all-nodes)
+        ("v" . origami-show-only-node)
+        ("k" . origami-previous-fold)
+        ("j" . origami-forward-fold)
+        ("x" . origami-reset)))
 
 ;;; anzu
 (use-package anzu
